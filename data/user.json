@@ -1,0 +1,18 @@
+[
+  {
+    "User": {
+      "username": "sahand",
+      "password": "Sa.12",
+      "role": "User",
+      "order": []
+    }
+  },
+  {
+    "ResturantOwner": {
+      "owner": "sahand12",
+      "password": "123",
+      "role": "ResturantOwner",
+      "resturant": "sahel"
+    }
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "sahel",
+    "owner": "sahand12",
+    "category": "FastFood",
+    "menu": [
+      {
+        "name": "pizza",
+        "price": 100.0,
+        "quantity": 100
+      },
+      {
+        "name": "salad",
+        "price": 100.0,
+        "quantity": 10
+      }
+    ],
+    "discount": 20
+  }
+]

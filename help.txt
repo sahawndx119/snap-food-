@@ -1,0 +1,18 @@
+in the name of God
+
+if we got "Empty" string value on a func's return valus it means the upper fuction returned unit type
+so now we should not print anything !!
+so we should check at main function that if a return value of a func is "Empty" we should handle
+
+
+3 ta chiz ro tooye Ok(String) bayad handel knim : 
+
+1 -> done : ke be manaye etmam barname hast
+
+2 -> back : baraye continue zdn ke menu ro az aval load kne /// ~mansookh~ bekhatere khasiate module menu back 
+be sourate ye ErrorType::BackOption bar migarde
+
+3 -> Empty :  ke hichi nabayad print knim...
+
+kar haye ezafee : mitunim toye tabe dovom UserCapabilities mitunim roye commmand shomare 3 ro bzarim jury ke
+biad bargarde be tabe qablish yekm kar dare dar natije age vaqt ezafee dashtim anjam midim

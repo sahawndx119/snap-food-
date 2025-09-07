@@ -1,0 +1,142 @@
+    pub fn show_menu(&self) -> Result<(), ErrorType> {
+        let len = self.menu.len();
+        if len == 0 {
+            return Err(ErrorType::EmptyFile(
+                "There is no food on this resturant's menu!!".to_string(),
+            ));
+        }
+
+        println!(
+            "{}",
+            "------------------------------------------------------".bright_white()
+        );
+        for i in (1..len).step_by(2) {
+            if self.menu[i - 1].quantity == 0 {
+                println!(
+                    "\x1b[9m{} ---- {}\x1b[0m          {} ---- {}",
+                    self.menu[i - 1].name,
+                    self.menu[i - 1].price,
+                    self.menu[i].name,
+                    self.menu[i].price
+                );
+            } else if self.menu[i].quantity == 0 {
+                println!(
+                    "{} ---- {}          \x1b[9m{} ---- {}\x1b[0m",
+                    self.menu[i - 1].name,
+                    self.menu[i - 1].price,
+                    self.menu[i].name,
+                    self.menu[i].price
+                );
+            } else if self.menu[i].quantity == 0 && self.menu[i - 1].quantity == 0 {
+                println!(
+                    "\x1b[9m{} ---- {}          {} ---- {}\x1b[0m",
+                    self.menu[i - 1].name,
+                    self.menu[i - 1].price,
+                    self.menu[i].name,
+                    self.menu[i].price
+                );
+            } else {
+                println!(
+                    "{} ---- {}          {} ---- {}",
+                    self.menu[i - 1].name.trim(),
+                    self.menu[i - 1].price,
+                    self.menu[i].name.trim(),
+                    self.menu[i].price
+                );
+            }
+        }
+
+        if len % 2 != 0 {
+            if self.menu[len - 1].quantity == 0 {
+                println!(
+                    "\x1b[9m{} ---- {}\x1b[0m",
+                    self.menu[len - 1].name,
+                    self.menu[len - 1].price
+                );
+            } else {
+                if self.discount == 0 {
+                    println!(
+                        "{} ---- {}",
+                        self.menu[len - 1].name,
+                        self.menu[len - 1].price
+                    );
+                } else {
+                    println!(
+                        "{} ---- {} --> {}",
+                        self.menu[len - 1].name,
+                        self.menu[len - 1].price,
+                        (self.menu[len - 1].price as f64 - ((self.menu[len - 1].price as f64 * self.discount as f64)/100.0) as f64)
+                    );
+                }
+            }
+        }
+        println!(
+            "{}",
+            "------------------------------------------------------".bright_white()
+        );
+        Ok(())
+    }
+
+
+
+
+
+
+
+pub fn update_total_price() -> Result<(), ErrorType> {
+    let users_str = match fs::read_to_string("data/user.json") {
+        Ok(val) => val,
+        Err(_) => {
+            return Err(ErrorType::ReadFromFile(
+                "Cannot read from the file".to_string(),
+            ))
+        }
+    };
+
+    let orders_str = match fs::read_to_string("data/order.json") {
+        Ok(val) => val,
+
+        Err(_) => {
+            return Err(ErrorType::ReadFromFile(
+                "Cannot read from the file".to_string(),
+            ))
+        }
+    };
+
+    let mut users = match serde_json::from_str::<Vec<All>>(&users_str) {
+        Ok(val) => val,
+
+        Err(_) => return Err(ErrorType::JsonDecode("Can not decode the json".to_string())),
+    };
+
+    let mut orders = match serde_json::from_str::<Vec<Order>>(&orders_str) {
+        Ok(val) => val,
+
+        Err(_) => return Err(ErrorType::JsonDecode("Can not decode the json".to_string())),
+    };
+
+    for user in users.iter_mut() {
+        if let All::User(holder) = user {
+            let mut sum = 0.0;
+            for user_order in &mut holder.order {
+                user_order
+                    .items
+                    .iter()
+                    .for_each(|item| sum += (item.price - (item.price * res.discount as f64)/100.0) * item.quantity as f64);
+                user_order.total_price = sum;
+            }
+        }
+    }
+
+    for order in orders.iter_mut() {
+        let mut sum = 0.0;
+        order
+            .items
+            .iter()
+            .for_each(|item| sum += item.price * item.quantity as f64);
+        order.total_price = sum;
+    }
+
+    todo!()
+}
+
